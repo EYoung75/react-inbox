@@ -14,6 +14,7 @@ class App extends Component {
   async componentDidMount() {
     const response = await fetch("http://localhost:8082/api/messages")
     const json = await response.json()
+    console.log("json", json)
     this.setState({messages: json})
   }
 
@@ -39,9 +40,9 @@ class App extends Component {
     })
   }
 
-    messageRead = (event) => {
-      this.patch([event.target.id], "read", "read", true)
-      console.log(event.target.id)
+    messageRead = (id) => {
+      this.patch(id, "read", "read", true)
+      console.log(id)
     }
 
     messageStarred = (event) => {
