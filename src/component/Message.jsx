@@ -1,14 +1,14 @@
 import React from "react";
 
 const Message = (props) => {
-    console.log("props", props)
+   
     var messages = props.messages.map(message => {
         return (
-            <div onClick={() => props.read(message.id)} className={`row message ${message.read ? "read" : "unread"}`} >
+            <div onClick={() => props.read(message.id)} className={`row message ${message.read ? "read" : "unread"} ${message.selected ? "selected" : ""}`}>
                 <div className="col-xs-1">
                     <div className="row">
                         <div className="col-xs-2">
-                            <input type="checkbox" />
+                            <input id={message.id} type="checkbox" onClick={props.messageSelect} checked={message.selected}/>
                         </div>
                         <div className="col-xs-2">
                             <i id={message.id} onClick={props.star} className={`star fa ${message.starred ? "fa-star" : "fa-star-o"}`}></i>

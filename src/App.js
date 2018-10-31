@@ -7,14 +7,13 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
-      messages: []
+      messages: [],
     }
   }
 
   async componentDidMount() {
     const response = await fetch("http://localhost:8082/api/messages")
     const json = await response.json()
-    console.log("json", json)
     this.setState({messages: json})
   }
 
@@ -42,19 +41,21 @@ class App extends Component {
 
     messageRead = (id) => {
       this.patch(id, "read", "read", true)
-      console.log(id)
     }
 
     messageStarred = (event) => {
       this.patch(event.target.id, "star", "starred")
     }
 
+    messageSelect = (event) => {
+      this.patch(event.target.id, "select", "select")
+      }
 
   render() {
     return (
       <div>
         <Toolbar />
-        <Message messages={this.state.messages} read={this.messageRead} star={this.messageStarred}/>
+        <Message messages={this.state.messages} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected}/>
       </div>
     )
   }
