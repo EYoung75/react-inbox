@@ -51,10 +51,20 @@ class App extends Component {
       this.patch(event.target.id, "select", "select")
       }
 
+    readAll = (event) => {
+      var selected = this.state.messages.filter(message => message.selected === true)
+      selected.map(message => this.patch(message.id, "read", "read", true))
+      }
+
+    unreadAll = (event) => {
+      var selected = this.state.messages.filter(message => message.selected === true)
+      selected.map(message => this.patch(message.id, "read", "read", false))
+    }
+
   render() {
     return (
       <div>
-        <Toolbar />
+        <Toolbar readAll={this.readAll} unreadAll={this.unreadAll} messages={this.state.messages}/>
         <Message messages={this.state.messages} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected}/>
       </div>
     )
