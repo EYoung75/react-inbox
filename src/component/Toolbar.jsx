@@ -26,7 +26,7 @@ class Toolbar extends React.Component {
 
                     <button onClick={this.props.unreadAll} className="btn btn-default">Mark As Unread</button>
 
-                    <select className="form-control label-select">
+                    <select onCLick={this.props.addLabel} className="form-control label-select">
                         <option>Apply label</option>
                         <option value="dev">dev</option>
                         <option value="personal">personal</option>
@@ -40,7 +40,7 @@ class Toolbar extends React.Component {
                         <option value="gschool">gschool</option>
                     </select>
 
-                    <button className="btn btn-default">
+                    <button onClick={this.props.delete} className="btn btn-default">
                         <i className="fa fa-trash-o"></i>
                     </button>
                 </div>

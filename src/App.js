@@ -71,14 +71,43 @@ class App extends Component {
       this.setState({compose: !this.state.compose})
     }
 
+    delete = (event) => {
+      var selected = this.state.messages.filter(message => message.selected === true)
+      selected.map(message => this.patch(message.id, "delete"))
+    }
+
+    addLabel = (event) => {
+      var selected = this.state.messages.map(message => message.selected === true)
+      selected.map(message => this.patch(message.id, "addLabel", "label"))
+    }
+
+    post = (event) => {
+      fetch('http://localhost:8082/api/messages', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          subject: "subject",
+          body: "body",
+          read: false,
+          starred: false,
+          labels: [],
+          selected: false
+        })
+      })
+    }
+
+
   render() {
 
     var compose=this.state.compose
     return (
       <div className="container">
-        <Toolbar readAll={this.readAll} unreadAll={this.unreadAll} messages={this.state.messages} selectAll={this.selectAll} compose={this.compose}/>
-        <Message messages={this.state.messages} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected}/>
-        {compose ? <div className="container"><ComposeForm /></div> : ""}     
+        <Toolbar readAll={this.readAll} unreadAll={this.unreadAll} messages={this.state.messages} selectAll={this.selectAll} compose={this.compose} delete={this.delete} addLabel={this.addLabel}/>
+        <Message messages={this.state.messages} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected} />
+        {compose ? <div className="container"><ComposeForm compose={this.compose} post={this.post}/></div> : ""}     
       </div>
     )
   }
