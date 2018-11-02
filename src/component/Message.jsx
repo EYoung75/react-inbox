@@ -15,14 +15,21 @@ const Message = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div onClick={props.showBody}>
+                    <div onClick={() => props.showBody(message.id)}>
                         <div onClick={() => props.read(message.id)} className="col-xs-11">
+                            {message.labels == "dev" ? <span class="label label-warning">dev</span> : message.labels == "personal" ? <span class="label label-warning">personal</span> : message.labels == "gschool" ? <span class="label label-warning">gschool</span> : ""}
                             <a href="#">
                                 {message.subject}
                             </a>
                         </div>
                     </div>
                 </div>
+                {props.messageBody === message.id ? 
+                    <div class="row message-body">
+                        <div class="col-xs-11 col-xs-offset-1">
+                            {message.body}
+                        </div>
+                    </div> : ""}
             </div>
 
         )

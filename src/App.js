@@ -9,7 +9,8 @@ class App extends Component {
     super()
     this.state = {
       messages: [],
-      compose: false
+      compose: false,
+      messageBody: 0
     }
   }
 
@@ -45,6 +46,14 @@ class App extends Component {
       this.patch(id, "read", "read", true)
     }
 
+    showBody = (id) => {
+      if(this.state.messageBody === 0) {
+        this.setState({messageBody: id})
+      } else if(this.state.messageBody === id) {
+        this.setState({messageBody: 0})
+      }
+    }
+
     messageStarred = (event) => {
       this.patch(event.target.id, "star", "starred")
     }
@@ -78,23 +87,30 @@ class App extends Component {
 
     addLabel = (event) => {
       var selected = this.state.messages.map(message => message.selected === true)
-      selected.map(message => this.patch(message.id, "addLabel", "label"))
+      selected.map(message => this.patch(message.id, "addLabel", "addLabel"))
     }
 
+    removeLabel = (event) => {
+      var selected = this.state.messages.map(message => message.selected === true)
+      selected.map(message => this.patch(message.id, "removeLabel", event.target.value))
+    }
+
+
+
     post = (event) => {
-      fetch('http://localhost:8082/api/messages', {
+      fetch("http://localhost:8082/api/messages", {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          subject: "subject",
-          body: "body",
+          subject: this.subject.req,
           read: false,
           starred: false,
+          selected: false,
           labels: [],
-          selected: false
+          body: this.body.req
         })
       })
     }
@@ -105,8 +121,8 @@ class App extends Component {
     var compose=this.state.compose
     return (
       <div className="container">
-        <Toolbar readAll={this.readAll} unreadAll={this.unreadAll} messages={this.state.messages} selectAll={this.selectAll} compose={this.compose} delete={this.delete} addLabel={this.addLabel}/>
-        <Message messages={this.state.messages} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected} />
+        <Toolbar readAll={this.readAll} unreadAll={this.unreadAll} messages={this.state.messages} selectAll={this.selectAll} compose={this.compose} delete={this.delete} addLabel={this.addLabel} removeLabel={this.removeLabel}/>
+        <Message showBody={this.showBody} messageBody={this.state.messageBody} messages={this.state.messages} showBody={this.showBody} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected} />
         {compose ? <div className="container"><ComposeForm compose={this.compose} post={this.post}/></div> : ""}     
       </div>
     )
