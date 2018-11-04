@@ -72,8 +72,19 @@ class App extends Component {
       selected.map(message => this.patch(message.id, "read", "read", false))
     }
 
-    selectAll = (event) => {
-      this.state.messages.map(message => this.patch(message.id, "select", "select"))
+    selectAll = () => {
+      let selected = this.state.messages.filter(i => {
+        return i.selected === true
+      })
+      if (selected.length === this.state.messages.length) {
+        this.state.messages.map(i => {
+          this.patch([i.id], 'allFalse')
+        })
+      } else {
+        this.state.messages.map(i => {
+          this.patch([i.id], 'allTrue')
+        })
+      }
     }
 
     compose = (event) => {
