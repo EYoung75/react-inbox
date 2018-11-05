@@ -98,7 +98,7 @@ class App extends Component {
 
     addLabel = (event) => {
       var selected = this.state.messages.map(message => message.selected === true)
-      selected.map(message => this.patch(message.id, "addLabel", "addLabel"))
+      selected.map(message => this.patch(message.id, "addLabel", event.target.value))
     }
 
     removeLabel = (event) => {
