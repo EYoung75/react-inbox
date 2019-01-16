@@ -10,9 +10,7 @@ class App extends Component {
     this.state = {
       messages: [],
       compose: false,
-      messageBody: 0,
-      subject: "",
-      body: ""
+      messageBody: 0
     }
   }
 
@@ -110,21 +108,10 @@ class App extends Component {
 
 
 
-    post = (event) => {
-      fetch("http://localhost:8082/api/messages", {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          subject: this.state.subject,
-          body: this.state.body,
-          read: false,
-          starred: false,
-          selected: false,
-          labels: []
-        })
+    post = () => {
+      alert("Message Sent")
+      this.setState({
+        compose: false
       })
     }
 
@@ -148,7 +135,7 @@ class App extends Component {
       <div className="container">
         <Toolbar readAll={this.readAll} unreadAll={this.unreadAll} messages={this.state.messages} selectAll={this.selectAll} compose={this.compose} delete={this.delete} addLabel={this.addLabel} removeLabel={this.removeLabel}/>
         <Message showBody={this.showBody} messageBody={this.state.messageBody} messages={this.state.messages} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected} />
-        {compose ? <div className="container"><ComposeForm holdSubject={this.holdSubject} holdBody={this.holdBody} compose={this.compose} post={this.post}/></div> : ""}     
+        {compose ? <div className="container"><ComposeForm compose={this.compose} post={this.post}/></div> : ""}     
       </div>
     )
   }
