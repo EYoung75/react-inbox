@@ -134,8 +134,8 @@ class App extends Component {
     return (
       <div className="container">
         <Toolbar readAll={this.readAll} unreadAll={this.unreadAll} messages={this.state.messages} selectAll={this.selectAll} compose={this.compose} delete={this.delete} addLabel={this.addLabel} removeLabel={this.removeLabel}/>
-        <Message showBody={this.showBody} messageBody={this.state.messageBody} messages={this.state.messages} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected} />
         {compose ? <div className="container"><ComposeForm compose={this.compose} post={this.post}/></div> : ""}     
+        <Message showBody={this.showBody} messageBody={this.state.messageBody} messages={this.state.messages} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected} />
       </div>
     )
   }
