@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import './App.css';
-import Toolbar from "./component/Toolbar.jsx";
-import Message from "./component/Message.jsx";
-import ComposeForm from "./component/ComposeForm.jsx";
+import React, { Component } from "react"
+import "./App.css"
+import Toolbar from "./component/Toolbar.jsx"
+import Message from "./component/Message.jsx"
+import ComposeForm from "./component/ComposeForm.jsx"
 
 class App extends Component {
   constructor(){
@@ -10,7 +10,9 @@ class App extends Component {
     this.state = {
       messages: [],
       compose: false,
-      messageBody: 0
+      messageBody: 0,
+      subject: "",
+      body: ""
     }
   }
 
@@ -59,7 +61,7 @@ class App extends Component {
     }
 
     messageSelect = (event) => {
-      this.patch(event.target.id, "select", "select")
+      this.patch([event.target.id], "select", "selected")
       }
 
     readAll = (event) => {
@@ -97,13 +99,13 @@ class App extends Component {
     }
 
     addLabel = (event) => {
-      var selected = this.state.messages.map(message => message.selected === true)
-      selected.map(message => this.patch(message.id, "addLabel", event.target.value))
+      let selected = this.state.messages.filter(item => item.selected === true)
+      selected.map(item => this.patch([item.id], "addLabel", "label", event.target.value))
     }
 
     removeLabel = (event) => {
-      var selected = this.state.messages.map(message => message.selected === true)
-      selected.map(message => this.patch(message.id, "removeLabel", event.target.value))
+      let selected = this.state.messages.filter(message => message.selected === true)
+      selected.map(item => this.patch([item.id], "removeLabel", "label", event.target.value))
     }
 
 
@@ -116,13 +118,25 @@ class App extends Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          subject: this.subject.req,
+          subject: this.state.subject,
+          body: this.state.body,
           read: false,
           starred: false,
           selected: false,
-          labels: [],
-          body: this.body.req
+          labels: []
         })
+      })
+    }
+
+    holdSubject = (e) => {
+      this.setState({
+        subject: e.target.value
+      })
+    }
+
+    holdBody = (e) => {
+      this.setState({
+        body: e.target.value
       })
     }
 
@@ -133,8 +147,8 @@ class App extends Component {
     return (
       <div className="container">
         <Toolbar readAll={this.readAll} unreadAll={this.unreadAll} messages={this.state.messages} selectAll={this.selectAll} compose={this.compose} delete={this.delete} addLabel={this.addLabel} removeLabel={this.removeLabel}/>
-        <Message showBody={this.showBody} messageBody={this.state.messageBody} messages={this.state.messages} showBody={this.showBody} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected} />
-        {compose ? <div className="container"><ComposeForm compose={this.compose} post={this.post}/></div> : ""}     
+        <Message showBody={this.showBody} messageBody={this.state.messageBody} messages={this.state.messages} read={this.messageRead} star={this.messageStarred} onClick={this.onClick} messageSelect={this.messageSelect} selected={this.state.selected} />
+        {compose ? <div className="container"><ComposeForm holdSubject={this.holdSubject} holdBody={this.holdBody} compose={this.compose} post={this.post}/></div> : ""}     
       </div>
     )
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const ComposeForm = (props) => {
     return (
@@ -11,13 +11,13 @@ const ComposeForm = (props) => {
             <div class="form-group">
                 <label for="subject" class="col-sm-2 control-label">Subject</label>
                 <div class="col-sm-8">
-                    <input id="subject" type="text" class="form-control" id="subject" placeholder="Enter a subject" name="subject" ></input>
+                    <input id="subject" type="text" class="form-control" id="subject" onChange={props.holdSubject} placeholder="Enter a subject" name="subject" ></input>
                 </div>
             </div>
             <div class="form-group">
                 <label id="body" for="body" class="col-sm-2 control-label">Body</label>
                 <div class="col-sm-8">
-                    <textarea name="body" id="body" class="form-control"></textarea>
+                    <textarea name="body" id="body" class="form-control" onChange={props.holdBody}></textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -30,4 +30,4 @@ const ComposeForm = (props) => {
     )
 }
 
-export default ComposeForm;
+export default ComposeForm

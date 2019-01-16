@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const Message = (props) => {
     var messages = props.messages.map(message => {
@@ -17,7 +17,9 @@ const Message = (props) => {
                     </div>
                     <div onClick={() => props.showBody(message.id)}>
                         <div onClick={() => props.read(message.id)} className="col-xs-11">
-                            {message.labels == "dev" ? <span class="label label-warning">dev</span> : message.labels == "personal" ? <span class="label label-warning">personal</span> : message.labels == "gschool" ? <span class="label label-warning">gschool</span> : ""}
+                            <span className="label label-warning">{message.labels[0]}</span>
+                            <span className="label label-warning">{message.labels[1]}</span>
+                            <span className="label label-warning">{message.labels[2]}</span>
                             <a href="#">
                                 {message.subject}
                             </a>
@@ -43,4 +45,4 @@ const Message = (props) => {
 }
 
 
-export default Message;
+export default Message
