@@ -8,4 +8,4 @@ An inbox app buit using React
 •User can "star" and add and remove labels to messages
 •User can bulk select/deselect messages and still perform functionality of labeling, marking "read"/"unread" and deleting
 
-![](React Inbox Screen Record.mov)
+![](react-inbox.gif)
