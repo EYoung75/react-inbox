@@ -1,5 +1,5 @@
 # React Inbox
-An inbox app buit using React
+An inbox app built with React
 
 ## Functionality
 
